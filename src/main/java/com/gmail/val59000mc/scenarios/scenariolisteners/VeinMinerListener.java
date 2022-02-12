@@ -101,25 +101,26 @@ public class VeinMinerListener extends ScenarioListener {
             return;
         }
         Vein vein = new Vein(block);
-        int amount = vein.getOres() * getVeinMultiplier(block.getType());
         Material material = e.getBlock().getType();
+        vein.process();
+        int amount = vein.getOres() * getVeinMultiplier(block.getType());
         // find all surrounding blocks
         int amntlo = 1;
         int amnthi = 3;
         int b = (int) (Math.random() * (amnthi - amntlo + 1) + amntlo);
         Bukkit.getLogger().info(String.valueOf(player.getInventory().firstEmpty()));
-        switch (block.getType()) {
+        switch (material) {
             case COAL_ORE:
                 Bukkit.getLogger().info(block.getType().name());
-                player.getInventory().setItem(player.getInventory().firstEmpty() ,new ItemStack(Material.TORCH, amount * 4));
+                e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.TORCH, amount * 4));
                 break;
             case COPPER_ORE:
                 Bukkit.getLogger().info(block.getType().name());
-                player.getInventory().setItem(player.getInventory().firstEmpty(), new ItemStack(Material.BLAZE_POWDER, amount * b));
+                e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.BLAZE_POWDER, amount * b));
                 break;
             case IRON_ORE:
                 Bukkit.getLogger().info(block.getType().name());
-                player.getInventory().setItem(player.getInventory().firstEmpty(), new ItemStack(Material.IRON_INGOT, amount * b));
+                e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.IRON_INGOT, amount * b));
                 break;
             case LAPIS_ORE:
                 Bukkit.getLogger().info(block.getType().name());
@@ -128,25 +129,25 @@ public class VeinMinerListener extends ScenarioListener {
                 int c = (int) (Math.random() * (max - min + 1) + min);
                 switch (c) {
                     case 0:
-                        player.getInventory().setItem(player.getInventory().firstEmpty(), new ItemStack(Material.LAPIS_LAZULI, amount * b));
-                        player.getInventory().setItem(player.getInventory().firstEmpty(), new ItemStack(Material.LAPIS_LAZULI, amount * b));
+                        e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.LAPIS_LAZULI, amount * b));
+                        e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.LAPIS_LAZULI, amount * b));
                         break;
                     case 1:
-                        player.getInventory().setItem(player.getInventory().firstEmpty(), new ItemStack(Material.LEATHER, amount * b));
+                        e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.LEATHER, amount * b));
                         break;
                 }
                 break;
             case GOLD_ORE:
                 Bukkit.getLogger().info(block.getType().name());
-                player.getInventory().setItem(player.getInventory().firstEmpty(), new ItemStack(Material.GOLD_INGOT, amount));
+                e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.GOLD_INGOT, amount));
                 break;
             case NETHER_GOLD_ORE:
                 Bukkit.getLogger().info(block.getType().name());
-                player.getInventory().setItem(player.getInventory().firstEmpty(), new ItemStack(Material.GOLD_NUGGET, amount * b * 2));
+                e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.GOLD_NUGGET, amount * b * 2));
                 break;
             case DIAMOND_ORE:
                 Bukkit.getLogger().info(block.getType().name());
-                player.getInventory().setItem(player.getInventory().firstEmpty(), new ItemStack(Material.DIAMOND, amount * b));
+                e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.DIAMOND, amount * b));
                 break;
             case REDSTONE_ORE:
                 Bukkit.getLogger().info(block.getType().name());
@@ -155,10 +156,10 @@ public class VeinMinerListener extends ScenarioListener {
                 int bx = (int) (Math.random() * (maxx - minx + 1) + minx);
                 switch (bx) {
                     case 0:
-                        player.getInventory().setItem(player.getInventory().firstEmpty(), new ItemStack(Material.NETHER_WART, amount * b));
+                        e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.NETHER_WART, amount * b));
                         break;
                     case 1:
-                        player.getInventory().setItem(player.getInventory().firstEmpty(), new ItemStack(Material.BREWING_STAND, amount * b));
+                        e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.BREWING_STAND, amount * b));
                         break;
                 }
                 break;
@@ -168,14 +169,13 @@ public class VeinMinerListener extends ScenarioListener {
                 break;
             case NETHER_QUARTZ_ORE:
                 Bukkit.getLogger().info(block.getType().name());
-                player.getInventory().setItem(player.getInventory().firstEmpty(), new ItemStack(Material.QUARTZ, amount * b));
+                e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.QUARTZ, amount * b));
                 break;
             case ANCIENT_DEBRIS:
                 Bukkit.getLogger().info(block.getType().name());
-                player.getInventory().setItem(player.getInventory().firstEmpty(), new ItemStack(Material.NETHERITE_INGOT, amount));
+                e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.NETHERITE_INGOT, amount));
                 break;
         }
-        vein.process();
 
         UhcItems.spawnExtraXp(player.getLocation(), xp);
 
