@@ -366,6 +366,7 @@ public class GameManager{
 		listeners.add(new EntityDeathListener(playerManager, config, playerDeathHandler));
 		listeners.add(new CraftListener());
 		listeners.add(new PingListener());
+		listeners.add(new MobSpawnListener());
 		listeners.add(new BlockListener(this));
 		listeners.add(new WorldListener());
 		listeners.add(new PlayerMovementListener(playerManager));
