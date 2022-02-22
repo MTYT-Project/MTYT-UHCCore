@@ -303,7 +303,7 @@ public class PlayerManager {
 			player.setFoodLevel(20);
 			player.setExp(0);
 
-			UhcItems.giveLobbyItemsTo(player);
+			//UhcItems.giveLobbyItemsTo(player);
 		} catch (UhcPlayerNotOnlineException e) {
 			// Do nothing because WAITING is a safe state
 		}
