@@ -68,3 +68,6 @@ commands:
   team:
     description: "Used to manage teams."
     usage: /<command> <sub-command>
+  ready:
+    description: "Set your team to be ready."
+    usage: /ready

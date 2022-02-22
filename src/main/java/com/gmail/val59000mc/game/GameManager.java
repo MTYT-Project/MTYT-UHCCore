@@ -394,6 +394,7 @@ public class GameManager{
 		registerCommand("spectate", new SpectateCommandExecutor(this, scoreboardHandler));
 		registerCommand("upload", new UploadCommandExecutor());
 		registerCommand("deathmatch", new DeathmatchCommandExecutor(this, deathmatchHandler));
+		registerCommand("ready", new ReadyCommandExecutor(this));
 		registerCommand("team", new TeamCommandExecutor(this));
 	}
 
