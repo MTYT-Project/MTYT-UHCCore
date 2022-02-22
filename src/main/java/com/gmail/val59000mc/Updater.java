@@ -25,7 +25,7 @@ import java.net.URL;
 
 public class Updater extends Thread implements Listener{
 
-    private static final String LATEST_RELEASE = "https://api.github.com/repos/Mezy/UhcCore/releases/latest";
+    private static final String LATEST_RELEASE = "https://api.github.com/repos/MTYT-Project/MTYT-UHCCore/releases/latest";
     private final Plugin plugin;
     private Version currentVersion, newestVersion;
     private boolean hasPendingUpdate;
