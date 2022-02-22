@@ -11,21 +11,43 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-
+  publish_release:
+    name: Publish release
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
-      with:
-        java-version: 1.8
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew build
-    - uses: actions/upload-artifact@v2
-      with:
-        name: artifact
-        path: build/libs
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: artifact
+          path: build/libs
+      - name: Create release
+        id: create_release
+        run: |
+          set -xe
+          RELDATE="$(date +'%Y-%m-%d %H:%M')"
+          NAME="Auto-Build $RELDATE"
+          TAGNAME="autobuild-$(date +'%Y-%m-%d-%H-%M')"
+          hub release create $(for a in artifacts/*.{zip,tar.xz}; do echo -a $a; done) -m "$NAME" -t "master" "$TAGNAME"
+          echo "::set-output name=tag_name::${TAGNAME}"
+          echo "::set-output name=rel_date::${RELDATE}"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Update Latest
+        run: |
+          NAME="Latest Auto-Build (${{ steps.create_release.outputs.rel_date }})"
+          TAGNAME="latest"
+          hub release delete "$TAGNAME" || true
+          git push --delete origin "$TAGNAME" || true
+          sleep 30
+          hub release create $(for a in build/libs/*; do echo -a $a; done) -m "$NAME" -t "main" "$TAGNAME"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
