@@ -39,13 +39,3 @@ jobs:
           hub release create $(for a in build/libs/*.jar; do echo -a $a; done) -m "$NAME" -t "main" "$TAGNAME"
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - name: Update Latest
-        run: |
-          NAME="Latest Auto-Build (${{ steps.create_release.outputs.rel_date }})"
-          TAGNAME="latest"
-          hub release delete "$TAGNAME" || true
-          git push --delete origin "$TAGNAME" || true
-          sleep 30
-          hub release create $(for a in build/libs/*; do echo -a $a; done) -m "$NAME" -t "main" "$TAGNAME"
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
