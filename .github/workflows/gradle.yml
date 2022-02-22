@@ -36,9 +36,7 @@ jobs:
           RELDATE="$(date +'%Y-%m-%d %H:%M')"
           NAME="Auto-Build $RELDATE"
           TAGNAME="autobuild-$(date +'%Y-%m-%d-%H-%M')"
-          hub release create $(for a in build/libs/*.jar; do echo -a $a; done) -m "$NAME" -t "master" "$TAGNAME"
-          echo "::set-output name=tag_name::${TAGNAME}"
-          echo "::set-output name=rel_date::${RELDATE}"
+          hub release create $(for a in build/libs/*.jar; do echo -a $a; done) -m "$NAME" -t "main" "$TAGNAME"
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Update Latest
