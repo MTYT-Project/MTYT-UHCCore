@@ -35,7 +35,7 @@ jobs:
           set -xe
           RELDATE="$(date +'%Y-%m-%d %H:%M')"
           NAME="Auto-Build $RELDATE"
-          TAGNAME="1.19.5"
+          TAGNAME="autobuild-$(date +'%Y-%m-%d-%H-%M')"
           hub release create $(for a in build/libs/*.jar; do echo -a $a; done) -m "$NAME" -t "main" "$TAGNAME"
         env:
           GITHUB_TOKEN: ${{ github.token }}
