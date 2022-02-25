@@ -66,10 +66,10 @@ public class VeinMinerListener extends ScenarioListener {
                 xp = 1;
                 break;
             case COPPER_ORE:
-            case LAPIS_LAZULI:
+            case LAPIS_ORE:
             case GOLD_ORE:
             case NETHER_QUARTZ_ORE:
-            case DIAMOND:
+            case DIAMOND_ORE:
                 orecheck = true;
                 xp = 3;
                 break;
@@ -90,7 +90,7 @@ public class VeinMinerListener extends ScenarioListener {
                 break;
         }
         if (!orecheck) {
-            Bukkit.getLogger().info("Not an ore...");
+            //Bukkit.getLogger().info("Not an ore...");
             return;
         }
         Vein vein = new Vein(block);
