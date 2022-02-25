@@ -38,6 +38,7 @@ public class VeinMinerListener extends ScenarioListener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
+        e.setDropItems(false);
         Map<Material, LootConfiguration<Material>> blockLoots = GameManager.getGameManager().getConfig().get(MainConfig.ENABLE_BLOCK_LOOT) ? GameManager.getGameManager().getConfig().get(MainConfig.BLOCK_LOOT) : new HashMap<>();
         /*blockLoots.forEach((material, materialLootConfiguration) -> {
             StringBuilder builder = new StringBuilder();
@@ -48,20 +49,12 @@ public class VeinMinerListener extends ScenarioListener {
         });*/
         Player player = e.getPlayer();
 
-        if (player.isSneaking()) {
-            return;
-        }
-
         Block block = e.getBlock();
         ItemStack tool = player.getInventory().getItemInMainHand();
 
         if (block.getType() == UniversalMaterial.GLOWING_REDSTONE_ORE.getType()) {
             block.setType(Material.REDSTONE_ORE);
             Bukkit.getLogger().info("Changed Glowing redstone to normal one");
-        }
-
-        if (block.getType() == Material.AIR) {
-            return;
         }
 
         int xp = 0;
@@ -108,22 +101,22 @@ public class VeinMinerListener extends ScenarioListener {
         int amntlo = 1;
         int amnthi = 3;
         int b = (int) (Math.random() * (amnthi - amntlo + 1) + amntlo);
-        Bukkit.getLogger().info(String.valueOf(player.getInventory().firstEmpty()));
+        //Bukkit.getLogger().info(String.valueOf(player.getInventory().firstEmpty()));
         switch (material) {
             case COAL_ORE:
-                Bukkit.getLogger().info(block.getType().name());
+                //Bukkit.getLogger().info(block.getType().name());
                 e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.TORCH, amount * 4));
                 break;
             case COPPER_ORE:
-                Bukkit.getLogger().info(block.getType().name());
+                //Bukkit.getLogger().info(block.getType().name());
                 e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.BLAZE_POWDER, amount * b));
                 break;
             case IRON_ORE:
-                Bukkit.getLogger().info(block.getType().name());
+                //Bukkit.getLogger().info(block.getType().name());
                 e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.IRON_INGOT, amount * b));
                 break;
             case LAPIS_ORE:
-                Bukkit.getLogger().info(block.getType().name());
+                //Bukkit.getLogger().info(block.getType().name());
                 int min = 0;
                 int max = 1;
                 int c = (int) (Math.random() * (max - min + 1) + min);
@@ -138,19 +131,19 @@ public class VeinMinerListener extends ScenarioListener {
                 }
                 break;
             case GOLD_ORE:
-                Bukkit.getLogger().info(block.getType().name());
+                //Bukkit.getLogger().info(block.getType().name());
                 e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.GOLD_INGOT, amount));
                 break;
             case NETHER_GOLD_ORE:
-                Bukkit.getLogger().info(block.getType().name());
+                //Bukkit.getLogger().info(block.getType().name());
                 e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.GOLD_NUGGET, amount * b * 2));
                 break;
             case DIAMOND_ORE:
-                Bukkit.getLogger().info(block.getType().name());
+                //Bukkit.getLogger().info(block.getType().name());
                 e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.DIAMOND, amount * b));
                 break;
             case REDSTONE_ORE:
-                Bukkit.getLogger().info(block.getType().name());
+                //Bukkit.getLogger().info(block.getType().name());
                 int minx = 0;
                 int maxx = 1;
                 int bx = (int) (Math.random() * (maxx - minx + 1) + minx);
@@ -164,15 +157,15 @@ public class VeinMinerListener extends ScenarioListener {
                 }
                 break;
             case EMERALD_ORE:
-                Bukkit.getLogger().info(block.getType().name());
+                //Bukkit.getLogger().info(block.getType().name());
                 UhcItems.spawnExtraXp(player.getLocation(), xp);
                 break;
             case NETHER_QUARTZ_ORE:
-                Bukkit.getLogger().info(block.getType().name());
+                //Bukkit.getLogger().info(block.getType().name());
                 e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.QUARTZ, amount * b));
                 break;
             case ANCIENT_DEBRIS:
-                Bukkit.getLogger().info(block.getType().name());
+                //Bukkit.getLogger().info(block.getType().name());
                 e.getPlayer().getLocation().getWorld().dropItem(e.getPlayer().getLocation(), new ItemStack(Material.NETHERITE_INGOT, amount));
                 break;
         }
@@ -188,10 +181,6 @@ public class VeinMinerListener extends ScenarioListener {
             } else {
                 player.setHealth(player.getHealth() - vein.getOres());
             }
-        }
-
-        if (calculateToolDamage) {
-            tool.setDurability((short) (tool.getDurability() + vein.getOres()));
         }
     }
 

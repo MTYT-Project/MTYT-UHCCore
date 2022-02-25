@@ -20,14 +20,19 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
 import javax.net.ssl.HttpsURLConnection;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Objects;
 
 public class Updater extends Thread implements Listener{
 
     private static final String LATEST_RELEASE = "https://api.github.com/repos/MTYT-Project/MTYT-UHCCore/releases/latest";
     private final Plugin plugin;
-    private Version currentVersion, newestVersion;
+    private String currentVersion;
+    private String newestVersion;
     private boolean hasPendingUpdate;
     private String jarDownloadUrl;
 
@@ -113,10 +118,10 @@ public class Updater extends Thread implements Listener{
         JsonParser jp = new JsonParser();
         JsonObject root = jp.parse(new InputStreamReader(connection.getInputStream())).getAsJsonObject();
 
-        newestVersion = new Version(root.get("tag_name").getAsString());
-        currentVersion = new Version(plugin.getDescription().getVersion());
+        newestVersion = root.get("tag_name").getAsString();
+        currentVersion = plugin.getDescription().getVersion();
 
-        if (!newestVersion.isNewerThan(currentVersion)){
+        if (Objects.equals(newestVersion, currentVersion)){
             return; // Already on the newest or newer version
         }
 
